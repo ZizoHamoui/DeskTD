@@ -1,0 +1,44 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# IDE files
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.pidb
+*.booproj
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Unity asset store cache
+Assets/AssetStoreTools*
+
+# Crashlytics
+crashlytics-build.properties
+
+# UIElementsSchema (auto-generated)
+UIElementsSchema/
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vsconfig
+
+# Claude Code files
+CLAUDE.md
+Tasks/lessons.md
