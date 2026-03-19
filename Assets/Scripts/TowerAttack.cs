@@ -37,6 +37,8 @@ public class TowerAttack : MonoBehaviour
     [SerializeField] private float lastAttackTime = 0f;
     [SerializeField] private bool isActive = false;
 
+    [HideInInspector] public bool isFrozenDisabled = false;
+
     private Tower tower;
     private CompassAnimation compassAnimation;
     private PencilAnimation pencilAnimation;
@@ -62,6 +64,7 @@ public class TowerAttack : MonoBehaviour
     void Update()
     {
         if (!isActive) return;
+        if (isFrozenDisabled) return;
 
         // Find and select target
         currentTarget = FindTarget();

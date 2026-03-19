@@ -16,6 +16,8 @@ public class SparkTower : MonoBehaviour
 
     public static event System.Action onCycleCompleted;
 
+    [HideInInspector] public bool isFrozenDisabled = false;
+
     private bool isPlaced = false;
     private float cycleTimer = 0f;
 
@@ -40,6 +42,7 @@ public class SparkTower : MonoBehaviour
     void Update()
     {
         if (!isPlaced) return;
+        if (isFrozenDisabled) return;
 
         cycleTimer += Time.deltaTime;
 
