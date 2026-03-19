@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tower
   towerType: 4
-  sparkCost: 2
+  sparkCost: 5
   gridX: -1
   gridY: -1
   isPlaced: 0
@@ -542,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SparkTower
   sparksPerCycle: 5
   cycleInterval: 10
+  isFrozenDisabled: 0
 --- !u!114 &50858261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2533,6 +2534,8 @@ MonoBehaviour:
   sparkPickupPrefab: {fileID: 2130576534545924122, guid: d8f5abf239953426c9045056c57bf99a, type: 3}
   minKillsForDrop: 3
   maxKillsForDrop: 7
+  freezeEnemyPrefab: {fileID: 0}
+  freezeEnemyNarrativeMessage: 
   isTutorialLevel: 1
   forceNextDrop: 0
   gameState: 0
@@ -4602,6 +4605,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   lastAttackTime: 0
   isActive: 0
+  isFrozenDisabled: 0
 --- !u!114 &1446675515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5532,7 +5536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: -147}
+  m_AnchoredPosition: {x: 90, y: -186}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2135686418

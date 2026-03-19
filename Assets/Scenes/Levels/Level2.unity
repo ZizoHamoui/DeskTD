@@ -2500,7 +2500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 92.96467}
+  m_AnchoredPosition: {x: 5, y: 17}
   m_SizeDelta: {x: 160, y: 45.8687}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &836257845
@@ -2906,9 +2906,9 @@ MonoBehaviour:
   sparkPickupPrefab: {fileID: 2130576534545924122, guid: d8f5abf239953426c9045056c57bf99a, type: 3}
   minKillsForDrop: 3
   maxKillsForDrop: 7
-  freezeEnemyPrefab: {fileID: 6616072928257907572, guid: 3481a0ede30c146acb78868d6aa8b768, type: 3}
-  freezeEnemyNarrativeMessage: '"A Freeze Monster appears! It will freeze your towers
-    one by one. Destroy it fast!"'
+  freezeEnemyPrefab: {fileID: 3594780746589612707, guid: bd3c4672ec23f4b1b8ed341f0ec60467, type: 3}
+  freezeEnemyNarrativeMessage: A Freeze Monster appears! It will freeze your towers
+    one by one. Destroy it fast!
   isTutorialLevel: 0
   forceNextDrop: 0
   gameState: 0
@@ -3737,7 +3737,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 9.266903}
+  m_AnchoredPosition: {x: 3, y: -46.697765}
   m_SizeDelta: {x: 160, y: 45.8687}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1226258407
@@ -6167,7 +6167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: -147}
+  m_AnchoredPosition: {x: 90, y: -182}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2135686418
