@@ -14,6 +14,8 @@ public class SparkTower : MonoBehaviour
     [Tooltip("Time in seconds for a full generation cycle")]
     [SerializeField] private float cycleInterval = 7f;
 
+    public static event System.Action onCycleCompleted;
+
     private bool isPlaced = false;
     private float cycleTimer = 0f;
 
@@ -46,6 +48,7 @@ public class SparkTower : MonoBehaviour
             if (SparkManager.Instance != null)
             {
                 SparkManager.Instance.AddSparks(sparksPerCycle);
+                onCycleCompleted?.Invoke();
             }
             cycleTimer = 0f;
         }

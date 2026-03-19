@@ -40,12 +40,15 @@ public class WaveManager : MonoBehaviour
 
     [HideInInspector] public bool forceNextDrop = false;
 
+    public event System.Action<int> onWaveComplete;
+
     [Header("Runtime State (Read-Only)")]
     [SerializeField] private GameState gameState = GameState.Idle;
     [SerializeField] private int currentWaveIndex = 0;
     [SerializeField] private int activeEnemyCount = 0;
     [SerializeField] private int totalEnemiesSpawned = 0;
 
+    private bool deferredVictory = false;
     private EnemySpawner enemySpawner;
 
     void Awake()
@@ -171,6 +174,9 @@ public class WaveManager : MonoBehaviour
                     lane = 0;
             }
 
+            // Clamp lane to valid range in case scene data is out of bounds
+            lane = Mathf.Clamp(lane, 0, Mathf.Max(0, laneCount - 1));
+
             // Spawn enemy
             enemySpawner.SpawnEnemy(lane);
             totalEnemiesSpawned++;
@@ -191,6 +197,10 @@ public class WaveManager : MonoBehaviour
     public void OnEnemyDeath(Tower killingTower = null, Vector3 deathPosition = default)
     {
         activeEnemyCount--;
+
+        // Notify tutorial before drop logic so it can set forceNextDrop in time
+        if (isTutorialLevel && TutorialManager.Instance != null)
+            TutorialManager.Instance.OnTutorialEnemyKilled();
 
         bool shouldDrop = false;
         if (forceNextDrop)
@@ -279,12 +289,16 @@ public class WaveManager : MonoBehaviour
             }
 
             currentWaveIndex++;
+            onWaveComplete?.Invoke(currentWaveIndex - 1);
 
             // Check if more waves exist
             if (currentWaveIndex >= waves.Length)
             {
-                // All waves complete - Victory!
-                TriggerVictory();
+                // Tutorial level: defer victory until narrative popup is dismissed
+                if (isTutorialLevel)
+                    deferredVictory = true;
+                else
+                    TriggerVictory();
             }
             else
             {
@@ -316,6 +330,18 @@ public class WaveManager : MonoBehaviour
         if (GameOverlay.Instance != null)
         {
             GameOverlay.Instance.ShowVictory();
+        }
+    }
+
+    /// <summary>
+    /// Called after the final narrative is dismissed to show the victory screen.
+    /// </summary>
+    public void CompleteDeferredVictory()
+    {
+        if (deferredVictory)
+        {
+            deferredVictory = false;
+            TriggerVictory();
         }
     }
 

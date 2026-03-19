@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Orchestrates the Level 1 tutorial flow through scripted narrative beats
-/// that teach core mechanics: Spark Towers, Pencil Towers, and spark pickups.
+/// that teach core mechanics: Spark Towers, Pencil Towers, erasers, and spark pickups.
 /// Only active on the tutorial level — attach to a GameObject in the Level 1 scene.
 /// </summary>
 public class TutorialManager : MonoBehaviour
@@ -12,8 +12,10 @@ public class TutorialManager : MonoBehaviour
     private enum TutorialState
     {
         WaitingToStart,
+        WaitingForFirstGeneration,
         WaitingForSparks,
         WaitingForFirstKill,
+        WaitingForWave2SecondKill,
         WaitingForPickupCollect,
         TutorialComplete
     }
@@ -26,6 +28,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private float startDelay = 1f;
 
     private TutorialState state = TutorialState.WaitingToStart;
+    private int wave2KillCount = 0;
 
     public bool IsTutorialComplete => state == TutorialState.TutorialComplete;
 
@@ -45,14 +48,16 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         Invoke(nameof(BeginTutorial), startDelay);
-
-        // Listen for the first ink trail so we can teach the player about it
-        GridTile.onFirstInkCreated += OnFirstInkCreated;
     }
 
     void OnDestroy()
     {
-        GridTile.onFirstInkCreated -= OnFirstInkCreated;
+        // Defensive unsubscribes
+        SparkTower.onCycleCompleted -= OnFirstSparkCycleCompleted;
+        if (SparkManager.Instance != null)
+            SparkManager.Instance.onSparksChanged -= OnSparksChanged;
+        if (WaveManager.Instance != null)
+            WaveManager.Instance.onWaveComplete -= OnWaveCompleted;
     }
 
     // === TUTORIAL FLOW ===
@@ -63,7 +68,7 @@ public class TutorialManager : MonoBehaviour
     private void BeginTutorial()
     {
         NarrativeEventUI.Show(
-            "Welcome, boss. This scroll holds ancient secrets \u2014 and the Ink Blots want to destroy it. Let\u2019s make sure that doesn\u2019t happen.",
+            "Hey there. This scroll holds the to a full digital world \u2014 and the Ink Blots want to destroy it. Let\u2019s make sure that doesn\u2019t happen.",
             OnWelcomeDismissed
         );
     }
@@ -80,9 +85,32 @@ public class TutorialManager : MonoBehaviour
     }
 
     /// <summary>
-    /// After player dismisses spark instruction, monitor spark count.
+    /// After player dismisses spark instruction, wait for first spark generation cycle.
     /// </summary>
     private void OnSparkInstructionDismissed()
+    {
+        state = TutorialState.WaitingForFirstGeneration;
+        SparkTower.onCycleCompleted += OnFirstSparkCycleCompleted;
+    }
+
+    /// <summary>
+    /// Beat 3 (NEW): First spark generation cycle completed — teach generator mechanic.
+    /// </summary>
+    private void OnFirstSparkCycleCompleted()
+    {
+        if (state != TutorialState.WaitingForFirstGeneration) return;
+        SparkTower.onCycleCompleted -= OnFirstSparkCycleCompleted;
+
+        NarrativeEventUI.Show(
+            "When the generator is full, you get 5 sparks. These will be needed to deploy more towers. Lets wait for 10 to deploy a pencil",
+            OnGeneratorNarrativeDismissed
+        );
+    }
+
+    /// <summary>
+    /// After generator narrative, monitor spark count for wave trigger.
+    /// </summary>
+    private void OnGeneratorNarrativeDismissed()
     {
         state = TutorialState.WaitingForSparks;
 
@@ -104,11 +132,7 @@ public class TutorialManager : MonoBehaviour
 
         state = TutorialState.WaitingForFirstKill;
 
-        // Force first kill to drop a spark pickup
-        if (WaveManager.Instance != null)
-            WaveManager.Instance.forceNextDrop = true;
-
-        // Beat 3: Enemy incoming + teach Pencil Tower
+        // Beat 4: Enemy incoming + teach Pencil Tower (no forceNextDrop)
         NarrativeEventUI.Show(
             "Ink Blots incoming! Place a Pencil Tower in the lane to shoot them down before they reach the scroll!",
             () =>
@@ -120,15 +144,72 @@ public class TutorialManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Fires when the first ink trail appears on a tile. Teaches player about ink shields and erasers.
+    /// Called by WaveManager on every enemy death during tutorial (before drop logic).
+    /// Handles first-kill eraser narrative and wave 2 drop arming.
     /// </summary>
-    private void OnFirstInkCreated()
+    public void OnTutorialEnemyKilled()
     {
-        GridTile.onFirstInkCreated -= OnFirstInkCreated;
+        if (state == TutorialState.WaitingForFirstKill)
+        {
+            // First kill — show eraser narrative, transition to wave 2 tracking
+            state = TutorialState.WaitingForWave2SecondKill;
 
-        NarrativeEventUI.Show(
-            "Watch out \u2014 Ink Blots leave ink trails on the grid! Ink gives enemies extra shields and blocks tower placement. Use an Eraser to clean it up."
-        );
+            // Subscribe to wave completion to know when wave 1 ends
+            if (WaveManager.Instance != null)
+                WaveManager.Instance.onWaveComplete += OnWaveCompleted;
+
+            NarrativeEventUI.Show(
+                "Ink adds a shield to incoming enemies, Lets clean those tiles using the eraser before the next wave."
+            );
+        }
+        else if (state == TutorialState.WaitingForWave2SecondKill)
+        {
+            wave2KillCount++;
+
+            if (wave2KillCount == 1)
+            {
+                // After 1st wave-2 kill, arm the drop so the 2nd kill triggers it
+                if (WaveManager.Instance != null)
+                    WaveManager.Instance.forceNextDrop = true;
+            }
+            // The 2nd kill will trigger the drop via forceNextDrop,
+            // and OnSparkPickupSpawned will handle the narrative
+        }
+    }
+
+    /// <summary>
+    /// When wave 1 completes, start wave 2 and reset kill counter.
+    /// </summary>
+    private void OnWaveCompleted(int waveIndex)
+    {
+        if (waveIndex == 0 && state == TutorialState.WaitingForWave2SecondKill)
+        {
+            wave2KillCount = 0;
+
+            StartCoroutine(StartWave2AfterDelay());
+        }
+        else if (waveIndex == 2)
+        {
+            // Last wave complete — show closing narrative
+            if (WaveManager.Instance != null)
+                WaveManager.Instance.onWaveComplete -= OnWaveCompleted;
+
+            NarrativeEventUI.Show(
+                "Phew, close one. It only gets more challenging from here, sharpen your pencils!.",
+                () =>
+                {
+                    if (WaveManager.Instance != null)
+                        WaveManager.Instance.CompleteDeferredVictory();
+                }
+            );
+        }
+    }
+
+    private System.Collections.IEnumerator StartWave2AfterDelay()
+    {
+        yield return new WaitForSeconds(5f);
+        if (WaveManager.Instance != null)
+            WaveManager.Instance.StartWaveExternal(1);
     }
 
     /// <summary>
@@ -136,7 +217,7 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void OnSparkPickupSpawned(GameObject pickupObj)
     {
-        if (state != TutorialState.WaitingForFirstKill) return;
+        if (state != TutorialState.WaitingForWave2SecondKill) return;
 
         state = TutorialState.WaitingForPickupCollect;
 
@@ -148,14 +229,14 @@ public class TutorialManager : MonoBehaviour
             pickup.onCollected += OnPickupCollected;
         }
 
-        // Beat 4: Teach spark pickup collection
+        // Beat: Teach spark pickup collection
         NarrativeEventUI.Show(
-            "Nice shot! See that spark on the ground? Click on it to collect bonus sparks from fallen enemies."
+            "See that spark on the ground? Click on it to collect bonus sparks from fallen enemies."
         );
     }
 
     /// <summary>
-    /// Beat 5: Player collected the pickup — tutorial complete.
+    /// Player collected the pickup — tutorial complete.
     /// </summary>
     private void OnPickupCollected()
     {
@@ -164,7 +245,7 @@ public class TutorialManager : MonoBehaviour
         state = TutorialState.TutorialComplete;
 
         NarrativeEventUI.Show(
-            "You\u2019ve got the basics down. More Ink Blots are on the way \u2014 defend the scroll!",
+            "You\u2019re ready. More Ink Blots are on the way \u2014 defend the scroll!",
             () =>
             {
                 if (WaveManager.Instance != null)
