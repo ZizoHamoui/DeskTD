@@ -111,10 +111,10 @@ public class TowerAttack : MonoBehaviour
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy == null || !enemy.IsAlive()) continue;
 
-            // Check if enemy is in same lane (Y coordinate match)
-            if (IsInSameLane(enemy.transform.position))
+            // Check if enemy is in same lane (Y coordinate match) and to the right of the tower
+            if (IsInSameLane(enemy.transform.position) && enemy.transform.position.x >= transform.position.x)
             {
-                // Select enemy with lowest X (closest to left edge = most dangerous)
+                // Select enemy with lowest X (closest to the tower)
                 float enemyX = enemy.transform.position.x;
                 if (enemyX < nearestX)
                 {
