@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 /// <summary>
 /// Shows narrative text popups during gameplay. Freezes the game until dismissed.
+/// If a narrative is already showing, new ones are queued and shown in order.
 /// </summary>
 public class NarrativeEventUI : MonoBehaviour
 {
@@ -19,6 +21,16 @@ public class NarrativeEventUI : MonoBehaviour
     [SerializeField] private Sprite defaultAvatar;
 
     private System.Action onDismissCallback;
+    private bool isShowing = false;
+
+    private struct QueuedNarrative
+    {
+        public string message;
+        public Sprite avatar;
+        public System.Action onDismiss;
+    }
+
+    private readonly Queue<QueuedNarrative> narrativeQueue = new Queue<QueuedNarrative>();
 
     void Awake()
     {
@@ -68,9 +80,26 @@ public class NarrativeEventUI : MonoBehaviour
 
     private void ShowNarrative(string message, Sprite avatar = null, System.Action onDismiss = null)
     {
-        if (Time.timeScale == 0f) return;
         if (narrativePanel == null) return;
 
+        // If a narrative is already showing, queue this one for later
+        if (isShowing)
+        {
+            narrativeQueue.Enqueue(new QueuedNarrative
+            {
+                message = message,
+                avatar = avatar,
+                onDismiss = onDismiss
+            });
+            return;
+        }
+
+        DisplayNarrative(message, avatar, onDismiss);
+    }
+
+    private void DisplayNarrative(string message, Sprite avatar, System.Action onDismiss)
+    {
+        isShowing = true;
         onDismissCallback = onDismiss;
 
         if (narrativeText != null)
@@ -100,11 +129,21 @@ public class NarrativeEventUI : MonoBehaviour
         if (narrativePanel == null) return;
 
         narrativePanel.SetActive(false);
+        isShowing = false;
+
+        // Restore timeScale before callback so chained Show() calls work
         Time.timeScale = 1f;
 
-        // Invoke callback after restoring timeScale so chained Show() calls work
+        // Invoke callback
         var callback = onDismissCallback;
         onDismissCallback = null;
         callback?.Invoke();
+
+        // Show next queued narrative if any
+        if (narrativeQueue.Count > 0)
+        {
+            var next = narrativeQueue.Dequeue();
+            DisplayNarrative(next.message, next.avatar, next.onDismiss);
+        }
     }
 }

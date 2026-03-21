@@ -68,7 +68,7 @@ public class TutorialManager : MonoBehaviour
     private void BeginTutorial()
     {
         NarrativeEventUI.Show(
-            "Hey there. This scroll holds the to a full digital world \u2014 and the Ink Blots want to destroy it. Let\u2019s make sure that doesn\u2019t happen.",
+            "Hey there. This scroll holds the to a full digital world, and the Ink Blots want to destroy it. Let\u2019s make sure that doesn\u2019t happen.",
             OnWelcomeDismissed
         );
     }
@@ -79,7 +79,7 @@ public class TutorialManager : MonoBehaviour
     private void OnWelcomeDismissed()
     {
         NarrativeEventUI.Show(
-            "Start by placing a Spark Tower on the grid \u2014 you\u2019ll need sparks to deploy your defenses.",
+            "Start by placing a Spark Tower on the grid, you\u2019ll need sparks to deploy your defenses.",
             OnSparkInstructionDismissed
         );
     }
@@ -245,7 +245,7 @@ public class TutorialManager : MonoBehaviour
         state = TutorialState.TutorialComplete;
 
         NarrativeEventUI.Show(
-            "You\u2019re ready. More Ink Blots are on the way \u2014 defend the scroll!",
+            "You\u2019re ready. More Ink Blots are on the way, defend the scroll!",
             () =>
             {
                 if (WaveManager.Instance != null)

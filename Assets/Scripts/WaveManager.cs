@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Singleton manager that orchestrates wave spawning, game flow, and win/lose conditions.
@@ -34,6 +35,14 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int maxKillsForDrop = 7;
     private int killsUntilNextDrop;
 
+    [Header("Special Enemies")]
+    [Tooltip("Prefab for the Freeze Enemy (spawns as last enemy of final wave)")]
+    [SerializeField] private GameObject freezeEnemyPrefab;
+
+    [Tooltip("Narrative message shown when the Freeze Enemy first appears")]
+    [TextArea]
+    [SerializeField] private string freezeEnemyNarrativeMessage;
+
     [Header("Tutorial")]
     [Tooltip("When true, waves do not auto-start and tutorial controls flow")]
     [SerializeField] private bool isTutorialLevel = false;
@@ -41,6 +50,7 @@ public class WaveManager : MonoBehaviour
     [HideInInspector] public bool forceNextDrop = false;
 
     public event System.Action<int> onWaveComplete;
+    public event System.Action<int> onWaveStarting;
 
     [Header("Runtime State (Read-Only)")]
     [SerializeField] private GameState gameState = GameState.Idle;
@@ -49,6 +59,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int totalEnemiesSpawned = 0;
 
     private bool deferredVictory = false;
+    private bool deferVictoryRequested = false;
+    private bool autoStartPaused = false;
     private EnemySpawner enemySpawner;
 
     void Awake()
@@ -93,11 +105,33 @@ public class WaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts the game after initial delay.
+    /// Prevents auto-start so a narrative can play first.
+    /// Call before Start or during Awake/Start of another script.
+    /// </summary>
+    public void PauseAutoStart()
+    {
+        autoStartPaused = true;
+    }
+
+    /// <summary>
+    /// Resumes auto-start after a narrative is dismissed.
+    /// </summary>
+    public void ResumeAutoStart()
+    {
+        autoStartPaused = false;
+    }
+
+    /// <summary>
+    /// Starts the game after initial delay, waiting if auto-start is paused.
     /// </summary>
     private IEnumerator StartGameAfterDelay()
     {
         gameState = GameState.Idle;
+
+        // Wait for any level-start narrative to be dismissed
+        while (autoStartPaused)
+            yield return null;
+
         yield return new WaitForSeconds(initialDelay);
         StartNextWave();
     }
@@ -112,8 +146,7 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if (!isTutorialLevel && currentWaveIndex == 2)
-            NarrativeEventUI.Show("Final wave — defend at all costs!");
+        onWaveStarting?.Invoke(currentWaveIndex);
 
         gameState = GameState.SpawningWave;
         WaveConfig wave = waves[currentWaveIndex];
@@ -177,11 +210,34 @@ public class WaveManager : MonoBehaviour
             // Clamp lane to valid range in case scene data is out of bounds
             lane = Mathf.Clamp(lane, 0, Mathf.Max(0, laneCount - 1));
 
-            // Spawn enemy
-            enemySpawner.SpawnEnemy(lane);
+            // Check if this is the last enemy of the last wave (Freeze Enemy slot)
+            bool isFreezeEnemySlot = freezeEnemyPrefab != null
+                && currentWaveIndex == waves.Length - 1
+                && i == wave.enemyCount - 1;
+
+            if (isFreezeEnemySlot)
+            {
+                // Override lane to one that already has an enemy
+                lane = FindOccupiedLane(laneCount);
+
+                enemySpawner.SpawnEnemy(lane, freezeEnemyPrefab);
+
+                if (!string.IsNullOrEmpty(freezeEnemyNarrativeMessage))
+                {
+                    bool narrativeDismissed = false;
+                    NarrativeEventUI.Show(freezeEnemyNarrativeMessage, () => { narrativeDismissed = true; });
+
+                    // The coroutine will pause here until the player dismisses the narrative
+                    yield return new WaitUntil(() => narrativeDismissed);
+                }
+            }
+            else
+            {
+                enemySpawner.SpawnEnemy(lane);
+            }
+
             totalEnemiesSpawned++;
             activeEnemyCount++;
-
 
             // Wait before spawning next enemy
             if (i < wave.enemyCount - 1)
@@ -192,6 +248,31 @@ public class WaveManager : MonoBehaviour
 
         // All enemies spawned, wave is now in progress
         gameState = GameState.WaveInProgress;
+    }
+
+    /// <summary>
+    /// Finds a lane that currently has at least one active enemy.
+    /// Used to spawn the Freeze Enemy in an occupied lane.
+    /// </summary>
+    private int FindOccupiedLane(int laneCount)
+    {
+        Enemy[] activeEnemies = FindObjectsOfType<Enemy>();
+        List<int> occupiedLanes = new List<int>();
+
+        foreach (Enemy e in activeEnemies)
+        {
+            if (e.IsAlive())
+            {
+                int l = e.GetLane();
+                if (!occupiedLanes.Contains(l))
+                    occupiedLanes.Add(l);
+            }
+        }
+
+        if (occupiedLanes.Count == 0)
+            return Random.Range(0, laneCount);
+
+        return occupiedLanes[Random.Range(0, occupiedLanes.Count)];
     }
 
     public void OnEnemyDeath(Tower killingTower = null, Vector3 deathPosition = default)
@@ -294,20 +375,22 @@ public class WaveManager : MonoBehaviour
             // Check if more waves exist
             if (currentWaveIndex >= waves.Length)
             {
-                // Tutorial level: defer victory until narrative popup is dismissed
-                if (isTutorialLevel)
+                // Defer victory when a narrative needs to play first
+                if (isTutorialLevel || deferVictoryRequested)
+                {
                     deferredVictory = true;
+                    deferVictoryRequested = false;
+                }
                 else
+                {
                     TriggerVictory();
+                }
             }
             else
             {
                 // During tutorial, don't auto-advance waves until tutorial is complete
                 if (isTutorialLevel && TutorialManager.Instance != null && !TutorialManager.Instance.IsTutorialComplete)
                     return;
-
-                if (!isTutorialLevel && currentWaveIndex == 2)
-                    NarrativeEventUI.Show("They're regrouping... reinforce your defenses!");
 
                 // Start next wave after delay
                 StartCoroutine(StartNextWaveAfterDelay());
@@ -331,6 +414,15 @@ public class WaveManager : MonoBehaviour
         {
             GameOverlay.Instance.ShowVictory();
         }
+    }
+
+    /// <summary>
+    /// Request that victory be deferred until CompleteDeferredVictory is called.
+    /// Must be called before the last wave completes (e.g. in Start).
+    /// </summary>
+    public void RequestDeferVictory()
+    {
+        deferVictoryRequested = true;
     }
 
     /// <summary>

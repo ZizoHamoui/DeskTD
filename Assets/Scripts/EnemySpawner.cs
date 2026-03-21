@@ -78,8 +78,14 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy(int lane)
     {
+        SpawnEnemy(lane, enemyPrefab);
+    }
 
-        if (enemyPrefab == null)
+    public void SpawnEnemy(int lane, GameObject prefabOverride)
+    {
+        GameObject prefab = prefabOverride != null ? prefabOverride : enemyPrefab;
+
+        if (prefab == null)
         {
             return;
         }
@@ -88,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = GetSpawnPosition(lane);
 
         // Instantiate enemy
-        GameObject enemyObject = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        GameObject enemyObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
 
         if (enemyObject == null)
         {
