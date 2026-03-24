@@ -4636,9 +4636,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c10900e26dc4ca6bcb1e1dba3336e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PencilAnimation
-  defaultSprite: {fileID: 21300000, guid: 2346a668baadb4a71824f0f174c3ed5a, type: 3}
-  shootSprite: {fileID: 21300000, guid: 1bcf8b676eda3422bb09fb422be0adcf, type: 3}
-  shootDuration: 0.15
+  sprites:
+  - {fileID: 21300000, guid: 2346a668baadb4a71824f0f174c3ed5a, type: 3}
+  - {fileID: 21300000, guid: c2075793adb9b41c3a99437a3c66c383, type: 3}
+  - {fileID: 21300000, guid: 1d114352d61a9413eb7e96384e66a06c, type: 3}
+  - {fileID: 21300000, guid: 93ef29cb3d5504add9dadf85e8c53820, type: 3}
+  - {fileID: 21300000, guid: 49a3fcd7fcd9147ff9fe1a0415973e00, type: 3}
+  - {fileID: 21300000, guid: 4ff2d07b2d3a24a12a78828bfec8d42a, type: 3}
+  - {fileID: 21300000, guid: 757df12da096d4a65b6c2d3111b01455, type: 3}
+  frameDuration: 0.1
 --- !u!1 &1478504957
 GameObject:
   m_ObjectHideFlags: 0
