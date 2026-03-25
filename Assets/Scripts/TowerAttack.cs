@@ -79,7 +79,6 @@ public class TowerAttack : MonoBehaviour
                 Enemy target = currentTarget;
                 compassAnimation.PlayWindUp(() =>
                 {
-                    // Re-check target validity; use current target if original died
                     Enemy attackTarget = (target != null && target.IsAlive()) ? target : currentTarget;
                     if (attackTarget != null && attackTarget.IsAlive())
                     {
@@ -87,7 +86,22 @@ public class TowerAttack : MonoBehaviour
                     }
                 });
             }
-            else if (compassAnimation == null)
+            // Pencil uses 7-frame animation with projectile on frame 4
+            else if (pencilAnimation != null && !pencilAnimation.IsAnimating)
+            {
+                lastAttackTime = Time.time;
+                Enemy target = currentTarget;
+                pencilAnimation.PlayShootAnimation(() =>
+                {
+                    Enemy attackTarget = (target != null && target.IsAlive()) ? target : currentTarget;
+                    if (attackTarget != null && attackTarget.IsAlive())
+                    {
+                        FireProjectile(attackTarget);
+                    }
+                });
+            }
+            // Fallback for towers without animation
+            else if (compassAnimation == null && pencilAnimation == null)
             {
                 Attack(currentTarget);
                 lastAttackTime = Time.time;
@@ -139,12 +153,6 @@ public class TowerAttack : MonoBehaviour
         if (target == null || !target.IsAlive()) return;
 
         FireProjectile(target);
-
-        // Notify pencil animation if present
-        if (pencilAnimation != null)
-        {
-            pencilAnimation.PlayShootFlash();
-        }
     }
 
     public void FireProjectile(Enemy target)
