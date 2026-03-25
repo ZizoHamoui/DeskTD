@@ -119,8 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
-=======
 --- !u!1 &17342852
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +357,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuIconDisplay
   GeneratorIconHover: {fileID: 571073692}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
 --- !u!1 &92596543
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,15 +391,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
-<<<<<<< Updated upstream
-  m_AnchoredPosition: {x: -9.7, y: 129}
-=======
-  m_AnchoredPosition: {x: -258, y: 98}
->>>>>>> Stashed changes
-=======
   m_AnchoredPosition: {x: -212.8, y: 48.063602}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
   m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &92596545
@@ -1132,8 +1121,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427691148}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!114 &456521368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1401,13 +1388,8 @@ Transform:
   m_GameObject: {fileID: 571073692}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
   m_LocalPosition: {x: -394.27, y: -227, z: 0}
   m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
-=======
-  m_LocalPosition: {x: 8.48, y: -2.79, z: 0}
-  m_LocalScale: {x: 0.1142182, y: 0.1142182, z: 0.1142182}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1497,13 +1479,8 @@ Transform:
   m_GameObject: {fileID: 678540896}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
-  m_LocalPosition: {x: -394.27, y: -228, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
-=======
   m_LocalPosition: {x: 8.48, y: -4.04333, z: 0}
   m_LocalScale: {x: 0.10210308, y: 0.10210308, z: 0.10210308}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1759,11 +1736,6 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
-  - component: {fileID: 1388505953}
-  - component: {fileID: 1388505955}
-  - component: {fileID: 1388505954}
-=======
   - component: {fileID: 1206319116}
   - component: {fileID: 1206319117}
   m_Layer: 0
@@ -1782,13 +1754,8 @@ Transform:
   m_GameObject: {fileID: 1206319115}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
-  m_LocalPosition: {x: -394.27, y: -226, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
-=======
   m_LocalPosition: {x: 8.48, y: -1.3622999, z: 0}
   m_LocalScale: {x: 0.1142182, y: 0.1142182, z: 0.1142182}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1885,21 +1852,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 427691149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-=======
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
-  m_AnchoredPosition: {x: -260.19998, y: 34.00001}
-=======
   m_AnchoredPosition: {x: -214.4, y: -4.7}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
   m_SizeDelta: {x: 350, y: 50}
->>>>>>> Stashed changes
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1388505954
 MonoBehaviour:
@@ -2410,15 +2366,9 @@ RectTransform:
   m_Children:
   - {fileID: 92596544}
   - {fileID: 295125683}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
-  - {fileID: 427691149}
-  - {fileID: 2029616908}
-  - {fileID: 108632068}
-=======
   - {fileID: 1050416889}
   - {fileID: 18617434}
   - {fileID: 456521364}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
   m_Father: {fileID: 1611399805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2734,8 +2684,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110820585}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!1 &2123824773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2762,13 +2710,8 @@ Transform:
   m_GameObject: {fileID: 2123824773}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-<<<<<<< Updated upstream:Assets/Scenes/Menu.unity
-  m_LocalPosition: {x: -394.27, y: -225, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
-=======
   m_LocalPosition: {x: 8.48, y: 0.065430105, z: 0}
   m_LocalScale: {x: 0.1142182, y: 0.1142182, z: 0.1142182}
->>>>>>> Stashed changes:Assets/Scenes/Menus/Menu.unity
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
