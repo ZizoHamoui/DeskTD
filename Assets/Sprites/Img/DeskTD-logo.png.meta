@@ -103,10 +103,10 @@ TextureImporter:
       name: DeskTD-logo_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 61
-        width: 1183
-        height: 949
+        x: 42
+        y: 60
+        width: 1185
+        height: 951
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
