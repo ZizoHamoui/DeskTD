@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Generic tower attack behavior for detecting and attacking enemies.
@@ -39,6 +40,7 @@ public class TowerAttack : MonoBehaviour
 
     [HideInInspector] public bool isFrozenDisabled = false;
 
+    private bool isUpgraded = false;
     private Tower tower;
     private CompassAnimation compassAnimation;
     private PencilAnimation pencilAnimation;
@@ -97,6 +99,11 @@ public class TowerAttack : MonoBehaviour
                     if (attackTarget != null && attackTarget.IsAlive())
                     {
                         FireProjectile(attackTarget);
+
+                        if (isUpgraded)
+                        {
+                            StartCoroutine(FireSecondProjectileDelayed());
+                        }
                     }
                 });
             }
@@ -193,6 +200,22 @@ public class TowerAttack : MonoBehaviour
             transform.position + Vector3.left * detectionRadius,
             transform.position + Vector3.right * detectionRadius
         );
+    }
+
+    public void SetUpgraded(bool upgraded)
+    {
+        isUpgraded = upgraded;
+    }
+
+    private IEnumerator FireSecondProjectileDelayed()
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        Enemy secondTarget = FindTarget();
+        if (secondTarget != null && secondTarget.IsAlive())
+        {
+            FireProjectile(secondTarget);
+        }
     }
 
     public bool IsActive()

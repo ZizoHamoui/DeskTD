@@ -83,6 +83,14 @@ public class PencilAnimation : MonoBehaviour
         isAnimating = false;
     }
 
+    public void SetUpgradedSprites(Sprite[] newSprites)
+    {
+        if (newSprites == null || newSprites.Length != 7) return;
+        sprites = newSprites;
+        if (spriteRenderer != null && newSprites[0] != null)
+            SetSprite(newSprites[0]);
+    }
+
     private void SetSprite(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;

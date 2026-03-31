@@ -112,6 +112,19 @@ public class TowerHealth : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void ApplyUpgrade(float newMaxHealth)
+    {
+        float healthDelta = newMaxHealth - maxHealth;
+        maxHealth = newMaxHealth;
+        currentHealth += healthDelta;
+
+        if (towerType == TowerType.StickyNote)
+        {
+            StickyNoteAnimation anim = GetComponent<StickyNoteAnimation>();
+            if (anim != null) anim.UpdateDamageSprite(currentHealth, maxHealth);
+        }
+    }
+
     public bool IsDestroyed()
     {
         return isDestroyed;

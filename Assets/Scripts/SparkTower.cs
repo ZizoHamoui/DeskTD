@@ -12,7 +12,7 @@ public class SparkTower : MonoBehaviour
     [SerializeField] private int sparksPerCycle = 5;
 
     [Tooltip("Time in seconds for a full generation cycle")]
-    [SerializeField] private float cycleInterval = 7f;
+    [SerializeField] private float cycleInterval = 3.5f;
 
     public static event System.Action onCycleCompleted;
 

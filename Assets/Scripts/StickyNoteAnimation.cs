@@ -40,6 +40,14 @@ public class StickyNoteAnimation : MonoBehaviour
         }
     }
 
+    public void SetUpgradedSprites(Sprite[] newDamageSprites)
+    {
+        if (newDamageSprites == null || newDamageSprites.Length == 0) return;
+        damageSprites = newDamageSprites;
+        if (spriteRenderer != null && newDamageSprites[0] != null)
+            spriteRenderer.sprite = newDamageSprites[0];
+    }
+
     public void UpdateDamageSprite(float currentHealth, float maxHealth)
     {
         if (damageSprites == null || damageSprites.Length == 0 || spriteRenderer == null) return;

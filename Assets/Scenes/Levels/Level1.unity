@@ -541,7 +541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SparkTower
   sparksPerCycle: 5
-  cycleInterval: 10
+  cycleInterval: 4
   isFrozenDisabled: 0
 --- !u!114 &50858261
 MonoBehaviour:
@@ -4593,8 +4593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ecc7428640541158ae1949ea764df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerAttack
-  detectionRadius: 30
-  fireRate: 2
+  detectionRadius: 40
+  fireRate: 2.2
   damage: 5
   projectilePrefab: {fileID: 2265156956237455051, guid: 1af99176efa044146a98d683fc35058b, type: 3}
   projectileSpawnOffset: {x: 0, y: 0, z: 0}
