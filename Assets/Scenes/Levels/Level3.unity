@@ -2672,16 +2672,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad59ff2e9a8d4470b20b295a6e486fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelNarrativeManager
-  levelStartMessage: The ink blots have regrouped and will be sending stronger forces,
-    defend the scroll.
-  waveStartMessages: []
+  levelStartMessage: They're back, and something is leading them. I can feel it in
+    the ink. Whatever it is wants this scroll gone. Not on our watch.
+  levelStartFollowUpMessage: I've channeled extra magic into the defenders. Tap a
+    placed tower to upgrade it.
+  waveStartMessages:
+  - waveIndex: 1
+    message: Here they come again, and angrier. I can sense the King getting closer.
+      Hold together!
   waveEndMessages:
   - waveIndex: 0
-    message: Make sure to use the compass to lob shots over the mug and sticky note
-      to block enemy advancement.
+    message: "Good work. But look how they moved \u2014 that wasn't random. Something
+      out there is giving orders. Stay sharp."
+  - waveIndex: 1
+    message: They're hitting harder. The King must be near, I can feel the ink surging.
   - waveIndex: 2
-    message: Good work, seems like they have retreated for now but do not be deceived,
-      they will be back.
+    message: We're holding, but barely. The Ink Blot King is coming himself. Upgrade
+      what you can. This is the one that matters
+  - waveIndex: 3
+    message: He's gone. The ink is pulling back... it's really over. The scroll is
+      safe. The coder is stirring. He'll never know how close we came. But we do.
+      Well done.
+  loseNarrativeMessage: No... The ink reached the scroll. Everything the coder worked
+    for, corrupted. You tried. We all did. But it wasn't enough.
+  endSceneName: 
 --- !u!1 &814402234
 GameObject:
   m_ObjectHideFlags: 0
@@ -3577,12 +3591,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   waves:
-  - enemyCount: 5
+  - enemyCount: 6
     spawnInterval: 11
     lanes: 0000000001000000020000000100000000000000
     randomizeLanes: 1
   - enemyCount: 10
     spawnInterval: 7
+    lanes: 0000000001000000020000000200000000000000
+    randomizeLanes: 1
+  - enemyCount: 12
+    spawnInterval: 4
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
   - enemyCount: 16
@@ -4929,7 +4947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1286840128
@@ -5138,7 +5156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridGenerator
   width: 8
-  height: 4
+  height: 5
   gapOverlap: 0
   tilePrefabLight: {fileID: 5266880958936793868, guid: 7cc27151ec5cb4d04b9693d6e57a711d, type: 3}
   tilePrefabDark: {fileID: 3716937907086722362, guid: ac681da8b95264299918e000ab56465a, type: 3}
@@ -5153,7 +5171,7 @@ Transform:
   m_GameObject: {fileID: 1377161860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.84, y: -11.7, z: 0}
+  m_LocalPosition: {x: 8.84, y: -16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

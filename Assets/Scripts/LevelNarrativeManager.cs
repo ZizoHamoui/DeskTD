@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Configurable per-level narrative beats. Attach to any level scene and fill in
@@ -27,11 +28,22 @@ public class LevelNarrativeManager : MonoBehaviour
     [Tooltip("Shown at the very start of the level, before wave 1 begins")]
     [TextArea] [SerializeField] private string levelStartMessage;
 
+    [Tooltip("Shown immediately after the level start message is dismissed")]
+    [TextArea] [SerializeField] private string levelStartFollowUpMessage;
+
     [Header("Wave Start Narratives")]
     [SerializeField] private WaveStartNarrative[] waveStartMessages;
 
     [Header("Wave End Narratives")]
     [SerializeField] private WaveEndNarrative[] waveEndMessages;
+
+    [Header("Lose Narrative")]
+    [Tooltip("Shown instead of the game over screen when the scroll is destroyed")]
+    [TextArea] [SerializeField] private string loseNarrativeMessage;
+
+    [Header("End Scene")]
+    [Tooltip("Scene name to load after the final win or lose narrative. Leave blank to use default win/lose screens.")]
+    [SerializeField] private string endSceneName;
 
     private bool waitingForDismissToStartGame = false;
 
@@ -56,6 +68,12 @@ public class LevelNarrativeManager : MonoBehaviour
             }
         }
 
+        // Register lose narrative intercept
+        if (!string.IsNullOrEmpty(loseNarrativeMessage))
+        {
+            GameOverlay.interceptGameOver = ShowLoseNarrative;
+        }
+
         // Show level start message after a short delay before the first wave
         if (!string.IsNullOrEmpty(levelStartMessage))
         {
@@ -72,6 +90,9 @@ public class LevelNarrativeManager : MonoBehaviour
             WaveManager.Instance.onWaveStarting -= OnWaveStarting;
             WaveManager.Instance.onWaveComplete -= OnWaveComplete;
         }
+
+        // Clear intercept so it doesn't linger across scene reloads
+        GameOverlay.interceptGameOver = null;
     }
 
     private System.Collections.IEnumerator ShowLevelStartAfterDelay(float delay)
@@ -80,9 +101,21 @@ public class LevelNarrativeManager : MonoBehaviour
 
         NarrativeEventUI.Show(levelStartMessage, () =>
         {
-            waitingForDismissToStartGame = false;
-            if (WaveManager.Instance != null)
-                WaveManager.Instance.ResumeAutoStart();
+            if (!string.IsNullOrEmpty(levelStartFollowUpMessage))
+            {
+                NarrativeEventUI.Show(levelStartFollowUpMessage, () =>
+                {
+                    waitingForDismissToStartGame = false;
+                    if (WaveManager.Instance != null)
+                        WaveManager.Instance.ResumeAutoStart();
+                });
+            }
+            else
+            {
+                waitingForDismissToStartGame = false;
+                if (WaveManager.Instance != null)
+                    WaveManager.Instance.ResumeAutoStart();
+            }
         });
     }
 
@@ -108,13 +141,15 @@ public class LevelNarrativeManager : MonoBehaviour
         {
             if (entry.waveIndex == waveIndex && !string.IsNullOrEmpty(entry.message))
             {
-                // If this is the last wave, defer victory until narrative is dismissed
                 if (WaveManager.Instance != null &&
                     waveIndex == WaveManager.Instance.GetTotalWaveCount() - 1)
                 {
+                    // Final wave — route to end scene or default victory
                     NarrativeEventUI.Show(entry.message, () =>
                     {
-                        if (WaveManager.Instance != null)
+                        if (!string.IsNullOrEmpty(endSceneName))
+                            SceneManager.LoadScene(endSceneName);
+                        else if (WaveManager.Instance != null)
                             WaveManager.Instance.CompleteDeferredVictory();
                     });
                 }
@@ -125,5 +160,16 @@ public class LevelNarrativeManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void ShowLoseNarrative()
+    {
+        NarrativeEventUI.Show(loseNarrativeMessage, () =>
+        {
+            if (!string.IsNullOrEmpty(endSceneName))
+                SceneManager.LoadScene(endSceneName);
+            else
+                GameOverlay.Instance?.ShowGameOverDirect();
+        });
     }
 }

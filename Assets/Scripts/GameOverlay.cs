@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 /// <summary>
 /// Manages the win/lose overlay screens using the same visual style as the pause menu.
@@ -9,6 +10,12 @@ using TMPro;
 public class GameOverlay : MonoBehaviour
 {
     public static GameOverlay Instance { get; private set; }
+
+    /// <summary>
+    /// Set this to intercept the game over screen. If set, it is invoked instead of
+    /// showing the panel, and then cleared. Used by LevelNarrativeManager for lose narratives.
+    /// </summary>
+    public static Action interceptGameOver;
 
     [Header("UI References")]
     [Tooltip("The overlay panel GameObject (same layout as pause menu)")]
@@ -62,8 +69,22 @@ public class GameOverlay : MonoBehaviour
         ShowOverlay(winText, winColor, isVictory: true);
     }
 
-    /// Shows the game over overlay.
+    /// Shows the game over overlay, or fires the intercept if one is registered.
     public void ShowGameOver()
+    {
+        if (interceptGameOver != null)
+        {
+            Action intercept = interceptGameOver;
+            interceptGameOver = null;
+            intercept.Invoke();
+            return;
+        }
+
+        ShowGameOverDirect();
+    }
+
+    /// Shows the game over overlay unconditionally, bypassing any intercept.
+    public void ShowGameOverDirect()
     {
         ShowOverlay(loseText, loseColor, isVictory: false);
     }
