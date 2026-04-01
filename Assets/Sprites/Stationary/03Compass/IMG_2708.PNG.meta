@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 43110e06ca8eb484ba85f05cf5399f97
+guid: 693b9b42d43f245e89a0bd91ef598bca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4538539404269336756
-    second: CompassCard_0
+      213: 3302226717591884536
+    second: IMG_2708_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CompassCard_0
+      name: IMG_2708_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 151
-        height: 260
+        x: 825
+        y: 250
+        width: 838
+        height: 1536
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4b8369eba812cfe30800000000000000
-      internalID: 4538539404269336756
+      spriteID: 8f25ed524bdd3dd20800000000000000
+      internalID: 3302226717591884536
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CompassCard_0: 4538539404269336756
+      IMG_2708_0: 3302226717591884536
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

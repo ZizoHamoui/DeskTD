@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Coroutine flashCoroutine;
     private Material flashMaterial;
+    private Material originalMaterial;
     private bool hasTriggeredSecondLastAlarm = false;
     private bool hasTriggeredLastAlarm = false;
     private float secondLastTileX = float.MinValue;
@@ -73,6 +74,9 @@ public class Enemy : MonoBehaviour
         }
 
         inkShield = GetComponent<InkShield>();
+
+        if (spriteRenderer != null)
+            originalMaterial = spriteRenderer.material;
     }
 
     void Update()
@@ -160,25 +164,23 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator HitFlash()
     {
-        if (spriteRenderer == null) yield break;
+        if (spriteRenderer == null || originalMaterial == null) yield break;
 
-        // Cache original material on first flash
+        // Create flash material once
         if (flashMaterial == null)
         {
-            flashMaterial = new Material(spriteRenderer.material);
+            flashMaterial = new Material(originalMaterial);
             flashMaterial.color = new Color(1f, 1f, 1f, 0.5f);
         }
 
-        // Swap to white-tinted copy of the same material (preserves sprite shape)
-        Material originalMat = spriteRenderer.material;
+        // Swap to white-tinted copy
         spriteRenderer.material = flashMaterial;
-        // Update sprite reference in case of animation frames
-        flashMaterial.mainTexture = originalMat.mainTexture;
+        flashMaterial.mainTexture = originalMaterial.mainTexture;
 
         yield return new WaitForSeconds(0.12f);
 
         if (spriteRenderer != null)
-            spriteRenderer.material = originalMat;
+            spriteRenderer.material = originalMaterial;
     }
 
     private void Die(Tower killingTower = null)

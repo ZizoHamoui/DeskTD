@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 415520a17a92542eeb92c65bb5abdcc9
+guid: 70e843c4a7dbd43938cca1816f3f43a6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2697551664246485594
-    second: SparkCard 1_0
+      213: -5127661219267392841
+    second: IMG_2716_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SparkCard 1_0
+      name: IMG_2716_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 151
-        height: 260
+        x: 749
+        y: 101
+        width: 816
+        height: 1093
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6ad0359bd0f509ad0800000000000000
-      internalID: -2697551664246485594
+      spriteID: 7ba4501e943e6d8b0800000000000000
+      internalID: -5127661219267392841
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SparkCard 1_0: -2697551664246485594
+      IMG_2716_0: -5127661219267392841
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

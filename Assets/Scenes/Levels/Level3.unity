@@ -652,15 +652,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerClickHandler
   upgradeArrowButton: {fileID: 1482657265}
   upgradeCost: 25
-  upgradePreviewImage: {fileID: 3626170018067094600, guid: 6c426b93de316499e8d2fe7a2ba94d92, type: 3}
+  upgradePreviewImage: {fileID: 21300000, guid: c9f00d386bc304917856b07f6645cb01, type: 3}
   upgradeDescription: Grow Stronger
   upgradedSprites:
-  - {fileID: 3626170018067094600, guid: 6c426b93de316499e8d2fe7a2ba94d92, type: 3}
-  - {fileID: 5216775793242274547, guid: c304cbccb57834b0d974e0b7052b0dc9, type: 3}
-  - {fileID: -6353155656538089004, guid: 834187394cce94cc7bc6f2c3f262a1f9, type: 3}
-  - {fileID: 3654024141050655524, guid: 9f89e4780b09e43f89994818eab35234, type: 3}
-  - {fileID: 3626170018067094600, guid: 6c426b93de316499e8d2fe7a2ba94d92, type: 3}
-  - {fileID: 3626170018067094600, guid: 6c426b93de316499e8d2fe7a2ba94d92, type: 3}
+  - {fileID: 21300000, guid: c9f00d386bc304917856b07f6645cb01, type: 3}
+  - {fileID: 21300000, guid: 07290fd0919684ab2b3b39cebc0e33b5, type: 3}
+  - {fileID: 21300000, guid: 0b91458a98e96457f90549c624cfce73, type: 3}
+  - {fileID: 21300000, guid: 5cd63ce5fbed841e9a48384fcb813f6b, type: 3}
+  - {fileID: 21300000, guid: 3989c5dc81af247d1b743ce301916535, type: 3}
+  - {fileID: 21300000, guid: 05481c93ecbb54bca9ad51547e742e05, type: 3}
 --- !u!1 &43861927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   flashAlpha: 0.4
   flashOnDuration: 0.15
   flashOffDuration: 0.1
-  flashCount: 3
+  flashCount: 1
 --- !u!1 &207929611
 GameObject:
   m_ObjectHideFlags: 0
@@ -3302,18 +3302,31 @@ MonoBehaviour:
     spawnInterval: 11
     lanes: 0000000001000000020000000100000000000000
     randomizeLanes: 1
+    freezeEnemyPositions: []
   - enemyCount: 10
     spawnInterval: 7
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
+    freezeEnemyPositions:
+    - 0.33
+    - 0.66
   - enemyCount: 12
     spawnInterval: 4
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
+    freezeEnemyPositions:
+    - 0.2
+    - 0.4
+    - 0.9
   - enemyCount: 16
     spawnInterval: 4
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
+    freezeEnemyPositions:
+    - 0.2
+    - 0.4
+    - 0.6
+    - 0.8
   initialDelay: 7
   waveDelay: 5
   sparkPickupPrefab: {fileID: 2130576534545924122, guid: d8f5abf239953426c9045056c57bf99a, type: 3}
@@ -4951,13 +4964,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerClickHandler
   upgradeArrowButton: {fileID: 2045542959}
   upgradeCost: 25
-  upgradePreviewImage: {fileID: 21300000, guid: 2346a668baadb4a71824f0f174c3ed5a, type: 3}
+  upgradePreviewImage: {fileID: 21300000, guid: ac4f671eebf66484a87d88beef456779, type: 3}
   upgradeDescription: Shoots 2 Bullets
   upgradedSprites:
-  - {fileID: 21300000, guid: 2346a668baadb4a71824f0f174c3ed5a, type: 3}
-  - {fileID: 21300000, guid: 9bfa8d54182d948ae82e3bb260cce43e, type: 3}
-  - {fileID: 21300000, guid: b7b0e120a2f3047ae8e9206885e7dca4, type: 3}
-  - {fileID: 21300000, guid: 56088371879a64222a6bb03e26daae4f, type: 3}
+  - {fileID: 21300000, guid: ac4f671eebf66484a87d88beef456779, type: 3}
+  - {fileID: 21300000, guid: 892ced6668d584ea2adc50fae4e2447a, type: 3}
+  - {fileID: 21300000, guid: 2e9f5b75dc5c445fa9eab6e35016fdbf, type: 3}
+  - {fileID: 21300000, guid: 70e843c4a7dbd43938cca1816f3f43a6, type: 3}
+  - {fileID: 21300000, guid: 2e9f5b75dc5c445fa9eab6e35016fdbf, type: 3}
+  - {fileID: 21300000, guid: 892ced6668d584ea2adc50fae4e2447a, type: 3}
+  - {fileID: 21300000, guid: ac4f671eebf66484a87d88beef456779, type: 3}
 --- !u!1 &1478504957
 GameObject:
   m_ObjectHideFlags: 0
@@ -5211,7 +5227,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 99
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: edf2769b83d284cf18ddb38ca34f724c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -162,6 +162,17 @@ public class WaveManager : MonoBehaviour
         totalEnemiesSpawned = 0;
         int laneCount = enemySpawner.GetLaneCount();
 
+        // Build freeze enemy index set from fractional positions in WaveConfig
+        var freezeIndices = new HashSet<int>();
+        if (freezeEnemyPrefab != null && wave.freezeEnemyPositions != null)
+        {
+            foreach (float frac in wave.freezeEnemyPositions)
+            {
+                int idx = Mathf.Clamp(Mathf.FloorToInt(frac * wave.enemyCount), 0, wave.enemyCount - 1);
+                freezeIndices.Add(idx);
+            }
+        }
+
         // For wave 1, track used lanes to prevent duplicates
         bool uniqueLanes = (currentWaveIndex == 0);
         bool[] usedLanes = new bool[laneCount];
@@ -210,11 +221,7 @@ public class WaveManager : MonoBehaviour
             // Clamp lane to valid range in case scene data is out of bounds
             lane = Mathf.Clamp(lane, 0, Mathf.Max(0, laneCount - 1));
 
-            // Check if this is the 3rd-quarter enemy of the last wave (Freeze Enemy slot)
-            int freezeEnemyIndex = Mathf.RoundToInt(wave.enemyCount * 0.75f) - 1;
-            bool isFreezeEnemySlot = freezeEnemyPrefab != null
-                && currentWaveIndex == waves.Length - 1
-                && i == freezeEnemyIndex;
+            bool isFreezeEnemySlot = freezeIndices.Contains(i);
 
             if (isFreezeEnemySlot)
             {
@@ -529,4 +536,9 @@ public class WaveConfig
 
     [Tooltip("If true, lanes are randomly assigned instead of using the lanes array")]
     public bool randomizeLanes = false;
+
+    [Tooltip("Fractional positions (0-1) in the wave where freeze enemies spawn. " +
+             "e.g. [0.33, 0.66] spawns one at 1/3 and one at 2/3 of the wave. " +
+             "Converted to 0-based indices via Floor(frac * enemyCount). Leave empty for no freeze enemies.")]
+    public float[] freezeEnemyPositions;
 }

@@ -85,7 +85,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 101
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: dd61aad074e254831956a7d02ea3bc0c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -245,8 +245,8 @@ MonoBehaviour:
   delayBetweenFreezes: 1
   frozenSpriteMappings:
   - towerType: 1
-    frozenSprite: {fileID: 21300000, guid: 12118044f6a234726a4d7a57ee872204, type: 3}
+    frozenSprite: {fileID: 21300000, guid: bda6852b32ba6422bbd31f188b1f2e43, type: 3}
   - towerType: 0
-    frozenSprite: {fileID: 21300000, guid: 3ea87cc6d3e8b44f8916a5843cd52a16, type: 3}
+    frozenSprite: {fileID: 21300000, guid: cc6fb1e74b32345a4b0255ed3f9ea43c, type: 3}
   - towerType: 2
-    frozenSprite: {fileID: 21300000, guid: 83a9c820fe6564fbba06b7b7310fd84d, type: 3}
+    frozenSprite: {fileID: 21300000, guid: 693b9b42d43f245e89a0bd91ef598bca, type: 3}
