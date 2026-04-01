@@ -61,11 +61,23 @@ public class ScreenFlash : MonoBehaviour
     }
 
     /// <summary>
-    /// Triggers the red flash sequence (3 flashes) with alarm sound.
+    /// Triggers the red flash sequence scoped to a single lane's Y band.
     /// </summary>
-    public void Flash()
+    public void Flash(float worldYCenter, float laneHeight)
     {
         if (isFlashing) return;
+
+        // Convert world-space lane bounds to viewport Y fractions
+        Camera cam = Camera.main;
+        float vpYMin = cam.WorldToViewportPoint(new Vector3(0f, worldYCenter - laneHeight * 0.5f, 0f)).y;
+        float vpYMax = cam.WorldToViewportPoint(new Vector3(0f, worldYCenter + laneHeight * 0.5f, 0f)).y;
+
+        RectTransform rt = flashImage.rectTransform;
+        rt.anchorMin = new Vector2(0f, vpYMin);
+        rt.anchorMax = new Vector2(1f, vpYMax);
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+
         StartCoroutine(FlashRoutine());
     }
 

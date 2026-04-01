@@ -45,13 +45,27 @@ public class NarrativeEventUI : MonoBehaviour
         }
 
         if (narrativePanel != null)
+        {
             narrativePanel.SetActive(false);
+
+            // Ensure narrative renders above the ScreenFlash canvas (sort order 999)
+            Canvas overrideCanvas = narrativePanel.AddComponent<Canvas>();
+            overrideCanvas.overrideSorting = true;
+            overrideCanvas.sortingOrder = 1000;
+            narrativePanel.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+        }
     }
 
     void Start()
     {
         if (continueButton != null)
             continueButton.onClick.AddListener(Dismiss);
+    }
+
+    void Update()
+    {
+        if (isShowing && Input.GetKeyDown(KeyCode.Space))
+            Dismiss();
     }
 
     public static void Show(string message)

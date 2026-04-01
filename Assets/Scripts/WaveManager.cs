@@ -210,10 +210,11 @@ public class WaveManager : MonoBehaviour
             // Clamp lane to valid range in case scene data is out of bounds
             lane = Mathf.Clamp(lane, 0, Mathf.Max(0, laneCount - 1));
 
-            // Check if this is the last enemy of the last wave (Freeze Enemy slot)
+            // Check if this is the 3rd-quarter enemy of the last wave (Freeze Enemy slot)
+            int freezeEnemyIndex = Mathf.RoundToInt(wave.enemyCount * 0.75f) - 1;
             bool isFreezeEnemySlot = freezeEnemyPrefab != null
                 && currentWaveIndex == waves.Length - 1
-                && i == wave.enemyCount - 1;
+                && i == freezeEnemyIndex;
 
             if (isFreezeEnemySlot)
             {
@@ -313,6 +314,12 @@ public class WaveManager : MonoBehaviour
     {
         activeEnemyCount--;
 
+        // In tutorial mode on waves 1 and 2, hand off to TutorialManager — no scroll damage
+        if (isTutorialLevel && TutorialManager.Instance != null && currentWaveIndex < 2)
+        {
+            TutorialManager.Instance.OnTutorialEnemyReachedEnd();
+            return;
+        }
 
         // Damage the scroll health
         bool isGameOver = false;
@@ -345,6 +352,29 @@ public class WaveManager : MonoBehaviour
             // Check if wave is complete (enemy died but scroll survived)
             CheckWaveComplete();
         }
+    }
+
+    /// <summary>
+    /// Destroys all active enemies and restarts the current wave from scratch.
+    /// Used by TutorialManager when an enemy slips through.
+    /// </summary>
+    public void RestartCurrentWave()
+    {
+        StopAllCoroutines();
+
+        // Destroy all enemies still in the scene
+        foreach (Enemy e in FindObjectsOfType<Enemy>())
+            Destroy(e.gameObject);
+
+        // Clean ink from all tiles
+        foreach (GridTile tile in FindObjectsOfType<GridTile>())
+            tile.CleanInk();
+
+        activeEnemyCount = 0;
+        totalEnemiesSpawned = 0;
+
+        // Re-run the same wave index
+        StartNextWave();
     }
 
     private void CheckWaveComplete(Tower killingTower = null)

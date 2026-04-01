@@ -213,6 +213,22 @@ public class TutorialManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Called by WaveManager when an enemy reaches the end during the tutorial.
+    /// Shows a forgiving narrative and restarts the current wave.
+    /// </summary>
+    public void OnTutorialEnemyReachedEnd()
+    {
+        NarrativeEventUI.Show(
+            "Oh no, an Ink Blot got through! Let\u2019s restart this wave \u2014 you\u2019ve got this!",
+            () =>
+            {
+                if (WaveManager.Instance != null)
+                    WaveManager.Instance.RestartCurrentWave();
+            }
+        );
+    }
+
+    /// <summary>
     /// Called by WaveManager when a spark pickup is instantiated during tutorial.
     /// </summary>
     public void OnSparkPickupSpawned(GameObject pickupObj)

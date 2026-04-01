@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour
     private bool hasTriggeredLastAlarm = false;
     private float secondLastTileX = float.MinValue;
     private float lastTileX = float.MinValue;
+    private float laneWorldY = 0f;
+    private float laneHeight = 1f;
 
     void Start()
     {
@@ -59,6 +61,15 @@ public class Enemy : MonoBehaviour
             GridTile lastTile = gridGen.GetTile(0, 0);
             if (lastTile != null)
                 lastTileX = lastTile.transform.position.x;
+
+            GridTile laneTile = gridGen.GetTile(0, lane);
+            if (laneTile != null)
+            {
+                laneWorldY = laneTile.transform.position.y;
+                SpriteRenderer laneSR = laneTile.GetComponent<SpriteRenderer>();
+                if (laneSR != null)
+                    laneHeight = laneSR.bounds.size.y;
+            }
         }
 
         inkShield = GetComponent<InkShield>();
@@ -77,7 +88,7 @@ public class Enemy : MonoBehaviour
         {
             hasTriggeredSecondLastAlarm = true;
             if (ScreenFlash.Instance != null)
-                ScreenFlash.Instance.Flash();
+                ScreenFlash.Instance.Flash(laneWorldY, laneHeight);
         }
 
         // Check if entered last tile — trigger alarm again
@@ -86,7 +97,7 @@ public class Enemy : MonoBehaviour
         {
             hasTriggeredLastAlarm = true;
             if (ScreenFlash.Instance != null)
-                ScreenFlash.Instance.Flash();
+                ScreenFlash.Instance.Flash(laneWorldY, laneHeight);
         }
 
         // Check if reached left edge (lose condition)

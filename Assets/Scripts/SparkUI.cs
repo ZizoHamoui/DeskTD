@@ -13,7 +13,7 @@ public class SparkUI : MonoBehaviour
 
     [Header("Display Settings")]
     [Tooltip("Format string for display. Use {0} for spark count.")]
-    public string displayFormat = "Sparks: {0}";
+    public string displayFormat = "{0}";
 
     [Tooltip("How often to update the display (in seconds). Lower = more responsive but more performance cost.")]
     public float updateInterval = 0.1f;
@@ -49,7 +49,7 @@ public class SparkUI : MonoBehaviour
     {
         if (SparkManager.Instance == null)
         {
-            sparkText.text = "Sparks: --";
+            sparkText.text = "--";
             return;
         }
 
