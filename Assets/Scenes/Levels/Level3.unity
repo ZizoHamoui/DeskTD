@@ -2262,7 +2262,8 @@ MonoBehaviour:
       Well done.
   loseNarrativeMessage: No... The ink reached the scroll. Everything the coder worked
     for, corrupted. You tried. We all did. But it wasn't enough.
-  endSceneName: 
+  endSceneName: EndingWin
+  loseEndSceneName: EndingLose
 --- !u!1 &814402234
 GameObject:
   m_ObjectHideFlags: 0

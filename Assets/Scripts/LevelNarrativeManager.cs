@@ -42,8 +42,11 @@ public class LevelNarrativeManager : MonoBehaviour
     [TextArea] [SerializeField] private string loseNarrativeMessage;
 
     [Header("End Scene")]
-    [Tooltip("Scene name to load after the final win or lose narrative. Leave blank to use default win/lose screens.")]
+    [Tooltip("Scene name to load after the final win narrative. Leave blank to use default victory screen.")]
     [SerializeField] private string endSceneName;
+
+    [Tooltip("Scene name to load after the lose narrative. Leave blank to use default game over screen.")]
+    [SerializeField] private string loseEndSceneName;
 
     private bool waitingForDismissToStartGame = false;
 
@@ -166,8 +169,8 @@ public class LevelNarrativeManager : MonoBehaviour
     {
         NarrativeEventUI.Show(loseNarrativeMessage, () =>
         {
-            if (!string.IsNullOrEmpty(endSceneName))
-                SceneManager.LoadScene(endSceneName);
+            if (!string.IsNullOrEmpty(loseEndSceneName))
+                SceneManager.LoadScene(loseEndSceneName);
             else
                 GameOverlay.Instance?.ShowGameOverDirect();
         });
