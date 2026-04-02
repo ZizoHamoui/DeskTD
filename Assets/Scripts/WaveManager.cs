@@ -469,7 +469,7 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator StartNextWaveAfterDelay()
     {
-        yield return new WaitForSeconds(waveDelay);
+        yield return new WaitForSecondsRealtime(waveDelay);
         StartNextWave();
     }
 

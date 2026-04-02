@@ -2684,7 +2684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6a8a3f877a84235b069637182d8267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SparkManager
-  startingSparks: 25
+  startingSparks: 20
   currentSparks: 0
 --- !u!1 &850391847
 GameObject:
@@ -3299,7 +3299,7 @@ MonoBehaviour:
     - 0.8
     bruteEnemyPositions: []
     bruteForcedLane: 1
-  initialDelay: 7
+  initialDelay: 5
   waveDelay: 5
   sparkPickupPrefab: {fileID: 2130576534545924122, guid: d8f5abf239953426c9045056c57bf99a, type: 3}
   minKillsForDrop: 3
@@ -4635,8 +4635,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MugSpawner
   mugPrefab: {fileID: 7588603862707428165, guid: cbf4297812599465fbf1726c8cef52e6, type: 3}
-  mugCount: 2
-  minColumn: 3
+  mugCount: 3
+  minColumn: 4
   maxColumn: 6
   gridGenerator: {fileID: 0}
 --- !u!1 &1401155348

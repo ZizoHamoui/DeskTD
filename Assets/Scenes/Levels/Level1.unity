@@ -6034,7 +6034,7 @@ MonoBehaviour:
   plopClip: {fileID: 8300000, guid: 39162600ebccf4ba78af12a5d309c661, type: 3}
   eraserClip: {fileID: 8300000, guid: 270868529a55d46958b8456e0931f538, type: 3}
   errorClip: {fileID: 8300000, guid: d115697ec1eb6402e8ef0db619c57e4c, type: 3}
-  enemyAttackClip: {fileID: 8300000, guid: d69206c8d1ff541a8b04c918959db6f6, type: 3}
+  enemyAttackClip: {fileID: 8300000, guid: db4706da965c4406d8e23bc5bb77f196, type: 3}
   shotHitClip: {fileID: 8300000, guid: 8cc8019d650d74b5485dc927c8cb6b7c, type: 3}
   alarmClip: {fileID: 8300000, guid: f209fd2e3000640269ee4609eb7e3d51, type: 3}
   musicVolume: 0.5
