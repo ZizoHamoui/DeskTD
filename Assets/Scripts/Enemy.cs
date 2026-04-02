@@ -28,6 +28,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float currentHealth;
     [SerializeField] private bool isAlive = true;
 
+    [HideInInspector] public bool isExternallyBlocked = false;
+    [HideInInspector] public float damageMultiplier = 1f;
+
+    private bool isSpeedBuffed = false;
     private InkShield inkShield;
     private SpriteRenderer spriteRenderer;
     private Coroutine flashCoroutine;
@@ -117,11 +121,15 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void MoveLeft()
     {
-        // Check if enemy is blocked by a tower
+        // Check if enemy is blocked by a tower or external controller
         EnemyAttackBehavior attackBehavior = GetComponent<EnemyAttackBehavior>();
         if (attackBehavior != null && attackBehavior.IsBlocked())
         {
-            return; // Don't move while attacking tower
+            return;
+        }
+        if (isExternallyBlocked)
+        {
+            return;
         }
 
         Vector3 newPosition = transform.position;
@@ -148,7 +156,7 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        currentHealth -= damage;
+        currentHealth -= damage * damageMultiplier;
 
         if (currentHealth <= 0)
         {
@@ -212,6 +220,27 @@ public class Enemy : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void ApplySpeedBuff(float multiplier, float duration)
+    {
+        if (isSpeedBuffed) return;
+        StartCoroutine(SpeedBuffCoroutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedBuffCoroutine(float multiplier, float duration)
+    {
+        isSpeedBuffed = true;
+        float original = moveSpeed;
+        moveSpeed *= multiplier;
+        yield return new WaitForSeconds(duration);
+        moveSpeed = original;
+        isSpeedBuffed = false;
+    }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed;
     }
 
     public void SetLane(int laneIndex)

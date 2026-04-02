@@ -43,6 +43,13 @@ public class WaveManager : MonoBehaviour
     [TextArea]
     [SerializeField] private string freezeEnemyNarrativeMessage;
 
+    [Tooltip("Prefab for the Ink Brute enemy")]
+    [SerializeField] private GameObject bruteEnemyPrefab;
+
+    [Tooltip("Narrative message shown when the Ink Brute first appears")]
+    [TextArea]
+    [SerializeField] private string bruteEnemyNarrativeMessage;
+
     [Header("Tutorial")]
     [Tooltip("When true, waves do not auto-start and tutorial controls flow")]
     [SerializeField] private bool isTutorialLevel = false;
@@ -173,6 +180,17 @@ public class WaveManager : MonoBehaviour
             }
         }
 
+        // Build brute enemy index set from fractional positions in WaveConfig
+        var bruteIndices = new HashSet<int>();
+        if (bruteEnemyPrefab != null && wave.bruteEnemyPositions != null)
+        {
+            foreach (float frac in wave.bruteEnemyPositions)
+            {
+                int idx = Mathf.Clamp(Mathf.FloorToInt(frac * wave.enemyCount), 0, wave.enemyCount - 1);
+                bruteIndices.Add(idx);
+            }
+        }
+
         // For wave 1, track used lanes to prevent duplicates
         bool uniqueLanes = (currentWaveIndex == 0);
         bool[] usedLanes = new bool[laneCount];
@@ -221,9 +239,23 @@ public class WaveManager : MonoBehaviour
             // Clamp lane to valid range in case scene data is out of bounds
             lane = Mathf.Clamp(lane, 0, Mathf.Max(0, laneCount - 1));
 
+            bool isBruteSlot = bruteIndices.Contains(i);
             bool isFreezeEnemySlot = freezeIndices.Contains(i);
 
-            if (isFreezeEnemySlot)
+            if (isBruteSlot)
+            {
+                int bruteLane = wave.bruteForcedLane >= 0 ? wave.bruteForcedLane : lane;
+                bruteLane = Mathf.Clamp(bruteLane, 0, Mathf.Max(0, laneCount - 1));
+                enemySpawner.SpawnEnemy(bruteLane, bruteEnemyPrefab);
+
+                if (!string.IsNullOrEmpty(bruteEnemyNarrativeMessage))
+                {
+                    bool narrativeDismissed = false;
+                    NarrativeEventUI.Show(bruteEnemyNarrativeMessage, () => { narrativeDismissed = true; });
+                    yield return new WaitUntil(() => narrativeDismissed);
+                }
+            }
+            else if (isFreezeEnemySlot)
             {
                 // Override lane to one that already has an enemy
                 lane = FindOccupiedLane(laneCount);
@@ -541,4 +573,11 @@ public class WaveConfig
              "e.g. [0.33, 0.66] spawns one at 1/3 and one at 2/3 of the wave. " +
              "Converted to 0-based indices via Floor(frac * enemyCount). Leave empty for no freeze enemies.")]
     public float[] freezeEnemyPositions;
+
+    [Tooltip("Fractional positions (0-1) in the wave where brute enemies spawn. " +
+             "e.g. [0.0] spawns one as the first enemy. Leave empty for no brute enemies.")]
+    public float[] bruteEnemyPositions;
+
+    [Tooltip("Lane override for brute enemies (0=bottom, 1=middle, 2=top). -1 uses wave's lane logic.")]
+    public int bruteForcedLane = 1;
 }

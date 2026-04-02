@@ -2577,7 +2577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6a8a3f877a84235b069637182d8267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SparkManager
-  startingSparks: 50
+  startingSparks: 25
   currentSparks: 0
 --- !u!1 &850391847
 GameObject:
@@ -3162,13 +3162,17 @@ MonoBehaviour:
     lanes: 0000000001000000020000000100000000000000
     randomizeLanes: 1
     freezeEnemyPositions: []
+    bruteEnemyPositions: []
+    bruteForcedLane: 1
   - enemyCount: 10
     spawnInterval: 7
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
     freezeEnemyPositions:
     - 0.33
-    - 0.66
+    - 0.8
+    bruteEnemyPositions: []
+    bruteForcedLane: 1
   - enemyCount: 12
     spawnInterval: 4
     lanes: 0000000001000000020000000200000000000000
@@ -3176,24 +3180,28 @@ MonoBehaviour:
     freezeEnemyPositions:
     - 0.2
     - 0.4
-    - 0.9
+    bruteEnemyPositions: []
+    bruteForcedLane: 1
   - enemyCount: 16
-    spawnInterval: 4
+    spawnInterval: 3
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
     freezeEnemyPositions:
     - 0.2
     - 0.4
-    - 0.6
     - 0.8
+    bruteEnemyPositions: []
+    bruteForcedLane: 1
   initialDelay: 7
   waveDelay: 5
   sparkPickupPrefab: {fileID: 2130576534545924122, guid: d8f5abf239953426c9045056c57bf99a, type: 3}
   minKillsForDrop: 3
   maxKillsForDrop: 7
   freezeEnemyPrefab: {fileID: 3594780746589612707, guid: bd3c4672ec23f4b1b8ed341f0ec60467, type: 3}
-  freezeEnemyNarrativeMessage: A Freeze Monster appears! It will freeze your towers
-    one by one. Destroy it fast!
+  freezeEnemyNarrativeMessage: 
+  bruteEnemyPrefab: {fileID: 8424908597069498153, guid: ec7a4500e2328404e8c16acbd1571dcb, type: 3}
+  bruteEnemyNarrativeMessage: The King has appeared! Beware he can charge at towers
+    and rally up enemies.
   isTutorialLevel: 0
   forceNextDrop: 0
   gameState: 0

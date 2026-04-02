@@ -96,6 +96,11 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
+    public float GetTileSpacing()
+    {
+        return tileSize - gapOverlap;
+    }
+
     public GridTile GetTile(int x, int y)
     {
         if (x < 0 || x >= width || y < 0 || y >= height) return null;
