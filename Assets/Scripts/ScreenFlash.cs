@@ -12,7 +12,7 @@ public class ScreenFlash : MonoBehaviour
 
     [Header("Flash Settings")]
     [SerializeField] private float flashAlpha = 0.4f;
-    [SerializeField] private float flashOnDuration = 0.15f;
+    [SerializeField] private float flashOnDuration = 0.1f;
     [SerializeField] private float flashOffDuration = 0.1f;
     [SerializeField] private int flashCount = 3;
 
