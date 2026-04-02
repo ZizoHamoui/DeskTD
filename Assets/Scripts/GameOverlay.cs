@@ -101,12 +101,12 @@ public class GameOverlay : MonoBehaviour
         {
             int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
             bool hasNextLevel = isVictory && nextIndex < SceneManager.sceneCountInBuildSettings;
-            nextLevelButton.SetActive(hasNextLevel);
+            nextLevelButton.gameObject.SetActive(hasNextLevel);
         }
 
         if (retryButton != null)
         {
-            retryButton.SetActive(!isVictory);
+            retryButton.gameObject.SetActive(!isVictory);
         }
 
         overlayPanel.SetActive(true);
