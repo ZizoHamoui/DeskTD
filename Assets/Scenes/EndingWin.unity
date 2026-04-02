@@ -2261,11 +2261,15 @@ MonoBehaviour:
   backgroundImage: {fileID: 1810223877}
   storyText: {fileID: 712612391}
   storyPanelTexts:
-  - '[Epilogue] The stationary failed. ink spreads. The scroll''s words blur and
-    dissolve, consumed by darkness.'
-  - The desk falls silent. The coder will wake to find their work erased, never knowing
-    what happened.
-  - The defenders fought bravely, but it wasn't enough. The story is lost.
+  - '[Epilogue] The Ink Blot King shatters. His dark ink dissolves into nothing,
+    and the desk begins to glow with a warm, golden light.'
+  - The stationery stands tall, battered, ink-stained, but unbroken. The scroll is
+    safe. Every word the coder wrote still shines on the page, exactly as he left
+    it.
+  - Fairy Pip smiles as the magic fades. The defenders return to their places, just
+    ordinary stationery once more. The coder stirs, stretches, and picks up his paper.
+    He'll never know what they did for him. But you do.
+  - They were asked to hold the line. They held it. No ink shall pass.
   timeBetweenChars: 0.03
   clickPrompt: {fileID: 1592278239}
   textScrollImage: {fileID: 1538504682}
@@ -2274,7 +2278,7 @@ MonoBehaviour:
   creditsContainer: {fileID: 147645388}
   creditsScrollSpeed: 100
   mainMenuButton: {fileID: 881845335}
-  endingMusic: {fileID: 0}
+  endingMusic: {fileID: 8300000, guid: 895603a4981b745068b34db09c233da9, type: 3}
   musicVolume: 0.5
 --- !u!4 &1473429994
 Transform:
@@ -2883,7 +2887,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6603766600648540477, guid: 946ecd62db2724dc9ae8a25d4cf6563e, type: 3}
+  m_Sprite: {fileID: -688336974933710353, guid: 6438e92b2e0714ffea34883c725c63a9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
