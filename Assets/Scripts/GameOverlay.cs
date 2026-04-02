@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine.UI;
 using System;
 
 /// <summary>
@@ -21,8 +21,8 @@ public class GameOverlay : MonoBehaviour
     [Tooltip("The overlay panel GameObject (same layout as pause menu)")]
     [SerializeField] private GameObject overlayPanel;
 
-    [Tooltip("TextMeshProUGUI component for the result text")]
-    [SerializeField] private TextMeshProUGUI resultText;
+    [Tooltip("Image component for the win/lose result")]
+    [SerializeField] private Image resultImage;
 
     [Tooltip("Next Level button — shown on win only")]
     [SerializeField] private GameObject nextLevelButton;
@@ -31,18 +31,11 @@ public class GameOverlay : MonoBehaviour
     [SerializeField] private GameObject retryButton;
 
     [Header("Display Settings")]
-    [Tooltip("Text to display on victory")]
-    [SerializeField] private string winText = "WIN";
+    [Tooltip("Sprite to display on victory")]
+    [SerializeField] private Sprite winSprite;
 
-    [Tooltip("Text to display on loss")]
-    [SerializeField] private string loseText = "LOST";
-
-    [Header("Colors")]
-    [Tooltip("Text color for victory")]
-    [SerializeField] private Color winColor = Color.green;
-
-    [Tooltip("Text color for loss")]
-    [SerializeField] private Color loseColor = Color.red;
+    [Tooltip("Sprite to display on loss")]
+    [SerializeField] private Sprite loseSprite;
 
     void Awake()
     {
@@ -66,7 +59,7 @@ public class GameOverlay : MonoBehaviour
 
     public void ShowVictory()
     {
-        ShowOverlay(winText, winColor, isVictory: true);
+        ShowOverlay(winSprite, isVictory: true);
     }
 
     /// Shows the game over overlay, or fires the intercept if one is registered.
@@ -86,20 +79,20 @@ public class GameOverlay : MonoBehaviour
     /// Shows the game over overlay unconditionally, bypassing any intercept.
     public void ShowGameOverDirect()
     {
-        ShowOverlay(loseText, loseColor, isVictory: false);
+        ShowOverlay(loseSprite, isVictory: false);
     }
 
-    private void ShowOverlay(string text, Color color, bool isVictory)
+    private void ShowOverlay(Sprite sprite, bool isVictory)
     {
         if (overlayPanel == null)
         {
             return;
         }
 
-        if (resultText != null)
+        if (resultImage != null && sprite != null)
         {
-            resultText.text = text;
-            resultText.color = color;
+            resultImage.sprite = sprite;
+            resultImage.preserveAspect = true;
         }
 
         // Win: show Next Level, hide Retry

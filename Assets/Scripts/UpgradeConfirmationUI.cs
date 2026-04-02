@@ -72,6 +72,7 @@ public class UpgradeConfirmationUI : MonoBehaviour
             if (preview != null)
             {
                 upgradePreviewImage.sprite = preview;
+                upgradePreviewImage.preserveAspect = true;
                 upgradePreviewImage.enabled = true;
             }
             else
@@ -89,7 +90,7 @@ public class UpgradeConfirmationUI : MonoBehaviour
 
         if (costText != null)
         {
-            costText.text = $"Cost: {cost} Sparks";
+            costText.text = $"{cost}";
             costText.color = canAfford ? affordableColor : unaffordableColor;
         }
 
