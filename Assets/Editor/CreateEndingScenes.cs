@@ -39,6 +39,11 @@ public class CreateEndingScenes
     {
         var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
 
+        // --- EventSystem (required for UI interaction) ---
+        GameObject eventSystemObj = new GameObject("EventSystem");
+        eventSystemObj.AddComponent<UnityEngine.EventSystems.EventSystem>();
+        eventSystemObj.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
+
         // --- Canvas ---
         GameObject canvasObj = new GameObject("EndingCanvas");
         Canvas canvas = canvasObj.AddComponent<Canvas>();

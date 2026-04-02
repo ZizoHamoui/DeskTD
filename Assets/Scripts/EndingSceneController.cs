@@ -218,6 +218,10 @@ public class EndingSceneController : MonoBehaviour
 
         creditsContainer.gameObject.SetActive(true);
 
+        // Disable raycasts on all credit text entries so they don't block the Main Menu button
+        foreach (var graphic in creditsContainer.GetComponentsInChildren<Graphic>())
+            graphic.raycastTarget = false;
+
         // Force layout rebuild so we get accurate height
         LayoutRebuilder.ForceRebuildLayoutImmediate(creditsContainer);
         yield return null; // wait one frame for layout
