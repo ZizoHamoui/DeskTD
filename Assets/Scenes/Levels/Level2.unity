@@ -1988,13 +1988,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverlay
   overlayPanel: {fileID: 513706968}
-  resultText: {fileID: 1689001824}
+  resultImage: {fileID: 0}
   nextLevelButton: {fileID: 207929611}
   retryButton: {fileID: 2132774009}
-  winText: WIN
-  loseText: GAME OVER
-  winColor: {r: 0, g: 1, b: 0, a: 1}
-  loseColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
+  winSprite: {fileID: 0}
+  loseSprite: {fileID: 0}
 --- !u!1 &600045825
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,6 +2324,7 @@ MonoBehaviour:
       they will be back.
   loseNarrativeMessage: 
   endSceneName: 
+  loseEndSceneName: 
 --- !u!1 &814402234
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,16 +3013,22 @@ MonoBehaviour:
     lanes: 0000000001000000020000000100000000000000
     randomizeLanes: 1
     freezeEnemyPositions: []
+    bruteEnemyPositions: []
+    bruteForcedLane: 1
   - enemyCount: 10
     spawnInterval: 7
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
     freezeEnemyPositions: []
+    bruteEnemyPositions: []
+    bruteForcedLane: 1
   - enemyCount: 16
     spawnInterval: 4
     lanes: 0000000001000000020000000200000000000000
     randomizeLanes: 1
     freezeEnemyPositions: []
+    bruteEnemyPositions: []
+    bruteForcedLane: 1
   initialDelay: 7
   waveDelay: 5
   sparkPickupPrefab: {fileID: 2130576534545924122, guid: d8f5abf239953426c9045056c57bf99a, type: 3}
@@ -3032,6 +3037,8 @@ MonoBehaviour:
   freezeEnemyPrefab: {fileID: 3594780746589612707, guid: bd3c4672ec23f4b1b8ed341f0ec60467, type: 3}
   freezeEnemyNarrativeMessage: A Freeze Monster appears! It will freeze your towers
     one by one. Destroy it fast!
+  bruteEnemyPrefab: {fileID: 0}
+  bruteEnemyNarrativeMessage: 
   isTutorialLevel: 0
   forceNextDrop: 0
   gameState: 0
@@ -4317,8 +4324,8 @@ MonoBehaviour:
   gapOverlap: 0
   tilePrefabLight: {fileID: 5266880958936793868, guid: 7cc27151ec5cb4d04b9693d6e57a711d, type: 3}
   tilePrefabDark: {fileID: 3716937907086722362, guid: ac681da8b95264299918e000ab56465a, type: 3}
-  inkSpriteLight: {fileID: 4165255573854096711, guid: 5f76ae93af1914841a803d78390c6c73, type: 3}
-  inkSpriteDark: {fileID: 3657302173676970815, guid: 9cba47eab24844cee9e1cfaef580b47d, type: 3}
+  inkSpriteLight: {fileID: 21300000, guid: 130a1dd12334848628b50506900d64dc, type: 3}
+  inkSpriteDark: {fileID: 21300000, guid: f868a258003134855b690b6e389af984, type: 3}
 --- !u!4 &1377161862
 Transform:
   m_ObjectHideFlags: 0
