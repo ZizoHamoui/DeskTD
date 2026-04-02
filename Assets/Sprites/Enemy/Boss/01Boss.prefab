@@ -84,7 +84,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 101
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 86600ff0f59224d91ae1047bfa04428b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -211,11 +211,11 @@ MonoBehaviour:
   lungeDistance: 0.3
   lungeDuration: 0.15
   chargeDamage: 4
-  chargeSpeed: 10
-  chargeCooldown: 10
+  chargeSpeed: 50
+  chargeCooldown: 15
   rallySpeedMultiplier: 1.5
   rallyBuffDuration: 5
-  rallyCooldown: 10
+  rallyCooldown: 25
   rallyAnimDuration: 1
   rallyTintColor: {r: 1, g: 0.7, b: 0.3, a: 1}
   recoveryDuration: 5
