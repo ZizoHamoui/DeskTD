@@ -11,10 +11,16 @@ public class SparkManager : MonoBehaviour
     [Header("Economy Settings")]
     [SerializeField] private int startingSparks = 5;
 
+    [Header("Passive Generation")]
+    [SerializeField] private int passiveSparksPerTick = 1;
+    [SerializeField] private float passiveTickInterval = 4f;
+
     [Header("Runtime State (Read-Only)")]
     [SerializeField] private int currentSparks;
 
     public event System.Action<int> onSparksChanged;
+
+    private float passiveTimer;
 
     void Awake()
     {
@@ -33,6 +39,17 @@ public class SparkManager : MonoBehaviour
     void Start()
     {
         currentSparks = startingSparks;
+        passiveTimer = passiveTickInterval;
+    }
+
+    void Update()
+    {
+        passiveTimer -= Time.deltaTime;
+        if (passiveTimer <= 0f)
+        {
+            AddSparks(passiveSparksPerTick);
+            passiveTimer = passiveTickInterval;
+        }
     }
 
     /// Adds sparks to the player's total.

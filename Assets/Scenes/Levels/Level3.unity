@@ -2685,6 +2685,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SparkManager
   startingSparks: 20
+  passiveSparksPerTick: 2
+  passiveTickInterval: 4
   currentSparks: 0
 --- !u!1 &850391847
 GameObject:
